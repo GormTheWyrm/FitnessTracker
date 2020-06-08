@@ -36,8 +36,8 @@ db.once('open', function() {
 
 // router
 // do I need to create a router?
-// require("./routes/api-routes.js")(app);
-// require("./routes/htmlRoutes")(app);
+// require("./routes/api-routes.js")(app);  //working
+require("./routes/html-routes.js")(app);
 // app.use(require("./routes/api-routes.js"));
 
 // app.get("/", (req, res) => {
