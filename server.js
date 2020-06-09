@@ -24,36 +24,17 @@ App running on port 8080!
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
+db.once('open', function () {
+  // DO I need a db.js?
 });
 
 
-
-
-
-// index route is working... without being defined anywere...?
-
-// router
-// do I need to create a router?
-// require("./routes/api-routes.js")(app);  //working
-require("./routes/html-routes.js")(app);
-// app.use(require("./routes/api-routes.js"));
-
-// app.get("/", (req, res) => {
-  // res.send("test")
-  //wait, why is this working?
-// }
-// );
 // ROUTES
-//  /api/workouts
-//need post, put and get
-//  /api/workouts/range
-//  gets workouts within range... what is range?
+require("./routes/api-routes.js")(app);  //WIP
+require("./routes/html-routes.js")(app);//working
 
-//  home page should be index and it will call api/workouts
-//need html route /stats
-//need html route /exercise
+
+
 
 
 
