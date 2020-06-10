@@ -2,28 +2,44 @@
 var path = require("path");   //do I need this?
 
 module.exports = function(app) {
-//  /api/workouts
-//need post, put and get
-//  /api/workouts/range
-//  gets workouts within range... what is range?
 
 app.get("/api/test", (req, res) => {
   res.json("test");
-}
+} //this is a test
 );
   app.get("/api/workouts", (req, res) => {
-    res.json("test");
-    //workout.functions...
+    db.Workout.find({})
+    .then(dbRes => {
+      res.json(dbRes);
+    })
+    .catch(err => {
+      res.json(err);
+    });
   }
   );
 
-  app.post("/api/workouts", (req, res) => {
+  app.post("/api/workouts", (req, res) => { //FIX ME
 
     // do database stuff here
     let myData = "not implemented";
     res.json(myData);
     console.log(myData);
     //res.json v res.send?
+  }
+  );
+  app.put("/api/workouts", (req, res) => {  // FIX ME
+
+    // do database stuff here
+    let myData = "not implemented";
+    res.json(myData);
+    console.log(myData);
+    //res.json v res.send?
+  }
+  );
+  
+  app.get("/api/workouts/range", (req, res) => {
+    res.json("test");
+    //workout.functions...
   }
   );
 // next step; investigate models, pull up example code.
