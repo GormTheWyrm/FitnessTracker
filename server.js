@@ -5,10 +5,12 @@ const mongoose = require("mongoose");
 // const path = require("path");
 const PORT = process.env.PORT || 8080;
 
-const db = require("./models"); // this uses index.js in models folder.
+// const db = require("./models"); // this uses index.js in models folder.
 //I mostly kept this in here so I dont have to google it next time I build an app that uses multiple models
 // alt s to require Workout directly
 // const Workout = require("./models/workout.js")
+// const workouts = require("./models/workout.js");
+//do I even need these in this file?
 
 const app = express();
 app.use(logger("dev"));
@@ -25,10 +27,10 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
 
 
 // ROUTES
-// require("./routes/api-routes.js")(app);  //WIP
-// require("./routes/html-routes.js")(app);//working
-const apiRoutes = require("./routes/api-routes.js");
-const htmlRoutes = require("./routes/html-routes.js");
+require("./routes/api-routes.js")(app);  //WIP
+require("./routes/html-routes.js")(app);//working
+// const apiRoutes = require("./routes/api-routes.js");
+// const htmlRoutes = require("./routes/html-routes.js");
 
 
 

@@ -10,11 +10,39 @@ const WorkoutSchema = new Schema({
   },
   exercises: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Exercise"
+      // type: Schema.Types.ObjectId,
+      // ref: "Exercise"
+      name: {
+        type: String,
+        trim: true
+
+      },
+      reps: {
+        type: Number
+      },
+      sets: {
+        type: Number
+      },
+      type: {
+        type: String,
+        trim: true
+        // should be "resistance" or "cardio"
+      },
+      weight: {
+        type: String,
+        unique: true
+
+      },
+      distance: { //cardio
+        type: Number
+
+      },
+      duration: { //cardio
+        type: Number
+      }
     }
   ]
-// I think exercises needs to be not a new model... because the front end tries to update it with a put
+  // I think exercises needs to be not a new model... because the front end tries to update it with a put
 
 
 });

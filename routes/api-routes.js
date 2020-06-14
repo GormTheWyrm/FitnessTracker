@@ -1,6 +1,8 @@
 //dependencies
 var path = require("path");   //do I need this?
-const { db } = require("../models/workout");
+// const { db } = require("../models/workout");
+const workouts = require("../models/workout.js");
+
 
 module.exports = function (app) {
 
@@ -23,8 +25,8 @@ module.exports = function (app) {
 
 
   app.get("/api/workouts", (req, res) => {
-    db.Workout.find()
-      // db.find()
+    workouts.find()
+     
       .then(dbRes => {
         console.log(dbRes);
         res.json(dbRes);
@@ -39,7 +41,7 @@ module.exports = function (app) {
   app.post("/api/workouts", (req, res) => { //FIX ME
     console.log(req.body);
     //Workout.create(...data...)
-    db.Workout.create
+    workouts.create
 
    
   }
