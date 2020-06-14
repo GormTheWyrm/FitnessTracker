@@ -1,5 +1,7 @@
 let mongoose = require("mongoose");
-let db = require("../models/workout.js");  
+// let db = require("../models/workout.js");  
+
+let workouts = require("../models/workout.js");
 
 mongoose.connect("mongodb://localhost/workout", {
   useNewUrlParser: true,
@@ -135,9 +137,10 @@ let workoutSeed = [
   }
 ];
 
-db.Workout.deleteMany({}) //error, also I think its workouts - plural
+workouts
+  .deleteMany({}) //error, also I think its workouts - plural
 //unless it is trying to access the mongoose mdel, which is Workout...
-  .then(() => db.Workout.collection.insertMany(workoutSeed))
+  .then(() => workouts.collection.insertMany(workoutSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);

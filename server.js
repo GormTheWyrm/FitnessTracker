@@ -1,45 +1,23 @@
 
-// var models_path = __dirname + '/models'
-// fs.readdirSync(models_path).forEach(function (file) {
-//   require(models_path+'/'+file)
-// })
-// https://stackoverflow.com/questions/14118492/node-js-mongodb-express-mongoose-how-to-require-all-the-models-in-a-parti
-
-// app.use(express.urlencoded({ extended: true }));   //allows use of nested objects, pretty important for mongodb
-// app.use(express.json());  //part of bodyparser, allows middleware to parse json. Both this and line above needed for data manipulating methods such as POST
-// app.use(express.static("public"));  // allows linking static files from public instead of root directory
-
-
-//27017
-/*  WARNING!!
-(node:3580) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the 
-MongoClient constructor.
-App running on port 8080!
-*/
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-/*
-lets try this again
-*/
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-
+// const path = require("path");
 const PORT = process.env.PORT || 8080;
 
 const db = require("./models"); // this uses index.js in models folder.
 //I mostly kept this in here so I dont have to google it next time I build an app that uses multiple models
+// alt s to require Workout directly
+// const Workout = require("./models/workout.js")
 
 const app = express();
-
 app.use(logger("dev"));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(express.static("public"));
+// app.use(express.static(path.join(__dirname, "public")));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { 
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { 
   useNewUrlParser: true,
   useFindAndModify: false
 });
@@ -47,9 +25,10 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", {
 
 
 // ROUTES
-require("./routes/api-routes.js")(app);  //WIP
-require("./routes/html-routes.js")(app);//working
-
+// require("./routes/api-routes.js")(app);  //WIP
+// require("./routes/html-routes.js")(app);//working
+const apiRoutes = require("./routes/api-routes.js");
+const htmlRoutes = require("./routes/html-routes.js");
 
 
 
@@ -77,11 +56,6 @@ require("./routes/html-routes.js")(app);//working
 
 
 
-
-//add a default route
-// here
-
-
 // END ROUTES
 
 // LISTENER
@@ -92,3 +66,22 @@ app.listen(PORT, () => {
 
 
 //npm run seed... look into this
+
+
+//NOTES
+
+/*
+DO I need to create a user for mongoose/mongo to work?
+Do I need to create a collection outside of app?
+...how do collections work... watching tutorial now...
+...
+
+I need to ask about how to set up the connection and models...
+I don't understand how the db.xxx.yyy works
+- what makes that connection,
+- is server.js db the same as mongo db?
+
+IF YOU CAN HELP ME GET MY SEED WORKING, THEN I SHOULD BE ABLE TO MANIPULATE DATA
+...BUT WITHOUR DATA i AM LOST
+...I should also ask about how to do this in mongodb...
+*/
