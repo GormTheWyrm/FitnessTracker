@@ -28,7 +28,7 @@ module.exports = function (app) {
   app.get("/api/workouts", (req, res) => {  // works, may need refinement...
     workouts.find()
       .then(dbRes => {
-        console.log(dbRes);
+        // console.log(dbRes);
         res.json(dbRes);
       })
       .catch(err => {
@@ -44,6 +44,7 @@ module.exports = function (app) {
     const work = new Workout(req.body);
     //check if body is good data...
     workouts.create(work)
+      //could be empty...
       .then(workres => {
         res.json(workres);
       })
@@ -51,50 +52,26 @@ module.exports = function (app) {
         res.json(err);
       });
 
-    /*
 
-app.post("/submit", ({ body }, res) => {
-  const user = new User(body);
-  user.coolifier();
-  user.makeCool();
-
-  User.create(user)
-    .then(dbUser => {
-      res.json(dbUser);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
-
-
-     db.Book.create(body)
-    .then(({_id}) => db.Library.findOneAndUpdate({}, { $push: { books: _id } }, { new: true }))
-    .then(dbLibrary => {
-      res.json(dbLibrary);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-    
-    */
 
 
 
   }
   );
-  app.put("/api/workouts", (req, res) => {  // FIX ME
-    //get id from database
-    //
-    workouts.find()
+  app.put("/api/workouts/:id", (req, res) => {  // FIX ME
+    //get id from req
+    //     console.log(req.params);
+    // let myId = '"'+ req.params.id + '"';
+    let myId = req.params.id;
+    let myData = req.body;
+
+    workouts.findOneAndUpdate({_id: myId}, {$set: {exercises: myData}}).then(
+      console.log("...")
+    );
+      //need to figure out how to add an exercise...
     
+      //currently adding an id... and  overwriting exercises...
 
-
-    // do database stuff here
-    let myData = "not implemented";
-    res.json(myData);
-    console.log(myData);
-    //res.json v res.send?
   }
   );
 
@@ -147,7 +124,7 @@ app.post("/submit", ({ body }, res) => {
 
   //will need a delete?
   // ^^^
-//app.delete("/api/workouts/:id", req, res)
-//workouts.findByIdAndDelete(body.id)
+  //app.delete("/api/workouts/:id", req, res)
+  //workouts.findByIdAndDelete(body.id)
 
 };
