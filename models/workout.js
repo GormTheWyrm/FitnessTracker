@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
-
 const WorkoutSchema = new Schema({
-
   day: {
     type: Date,
     default: Date.now
@@ -15,7 +12,6 @@ const WorkoutSchema = new Schema({
       name: {
         type: String,
         trim: true
-
       },
       reps: {
         type: Number
@@ -49,10 +45,7 @@ const WorkoutSchema = new Schema({
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
 //this actually connects...
-
 module.exports = Workout;
-
-
 //https://mongoosejs.com/docs/schematypes.html
 // learn schema types
 
