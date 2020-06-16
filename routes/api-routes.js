@@ -1,12 +1,12 @@
 //dependencies
-var path = require("path");   
+var path = require("path");
 const workouts = require("../models/workout.js");
 const { Workout } = require("../models/index.js");
 
 
 module.exports = function (app) {
 
-  app.get("/api/workouts", (req, res) => {  
+  app.get("/api/workouts", (req, res) => {
     workouts.find()
       .then(dbRes => {
         res.json(dbRes);
@@ -16,7 +16,7 @@ module.exports = function (app) {
       });
   }
   );
-  app.post("/api/workouts", (req, res) => { 
+  app.post("/api/workouts", (req, res) => {
     const work = new Workout(req.body);
     workouts.create(work)
       .then(workres => {
@@ -28,16 +28,43 @@ module.exports = function (app) {
 
   }
   );
+  // this works but doesnt update totalDuration
   app.put("/api/workouts/:id", (req, res) => {  // FIX ME
     let myId = req.params.id;
     let myData = req.body;
-    workouts.findOneAndUpdate({_id: myId}, {$push: {exercises: myData}})
-    .then(workres => {
-      res.json(workres);
-    })
-    .catch(err => {
-      res.json(err);
-    });  
+    let totalDur;
+    //testing
+
+    workouts.findOneAndUpdate({ _id: myId }, { $push: { exercises: myData } })
+      .then(workres => {
+        //I want to update totalDuration
+        workouts.find({ _id: myId })
+          .then(function (myvar) {
+            console.log(myvar[0].exercises[0]);
+            totalDur = myvar[0].totalDuration;
+            let durArray = myvar[0].exercises;
+            console.log(durArray);
+            //set it to 0 , then run for loop
+            for (i = 0; i < durArray.length - 1; i++) {
+              totalDur = totalDur + durArray[i];
+            }
+            workouts.findOneAndUpdate({ _id: myId }, { totalDuration: totalDur })
+            //this would be easier as a prototype method-
+            // if I could figure out how to define a existing workout document
+            // to call the method on
+            //NOT WORKING- totalDuration is not showing up in robo 3T
+
+          })
+          .catch(err1 => {
+            res.json(err1);
+          });
+
+
+        res.json("workout updated");
+      })
+      .catch(err2 => {
+        res.json(err2);
+      });
   }
   );
 
@@ -54,5 +81,8 @@ module.exports = function (app) {
       });
   }
   );
+
+//I should add a function that deletes data over a certain age so that the app is easier to maintain
+
 
 };

@@ -38,11 +38,20 @@ const WorkoutSchema = new Schema({
       }
     }
   ]
+,
+    //totalDuration 
+    totalDuration: {
+      type: Number,
+      default: 0
+    }
   // I think exercises needs to be not a new model... because the front end tries to update it with a put
-
-
 });
-
+//fill in total duraction here?
+  WorkoutSchema.methods.addDuration = function() {
+    this.totalDuration = this.totalDuration + this.exercise[exercise.length - 1].duration;
+    return this.totalDuration;
+  };
+  //this might have been easier if I used a second model...
 const Workout = mongoose.model("Workout", WorkoutSchema);
 //this actually connects...
 module.exports = Workout;
