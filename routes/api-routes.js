@@ -65,66 +65,32 @@ module.exports = function (app) {
     let myId = req.params.id;
     let myData = req.body;
 
-    workouts.findOneAndUpdate({_id: myId}, {$set: {exercises: myData}}).then(
-      console.log("...")
-    );
-      //need to figure out how to add an exercise...
-    
+    // workouts.findOneAndUpdate({_id: myId}, {$set: {exercises: myData}})
+    workouts.findOneAndUpdate({_id: myId}, {$push: {exercises: myData}})
+    .then(workres => {
+      res.json(workres);
+       console.log("...");
+    })
+    .catch(err => {
+      res.json(err);
+    });  
       //currently adding an id... and  overwriting exercises...
-
+//push?
   }
   );
 
-  app.get("/api/workouts/range", (req, res) => {
-    res.json("test");
-    //workout.functions...
-    // get...
+  app.get("/api/workouts/range", (req, res) => {  //NEEDS TO BE FIXED
+    // what range are we looking at? days? number of exercises?
+    workouts.find()
+      .then(rangeData => {
+        // console.log(dbRes);
+        res.json(rangeData);
+      })
+      .catch(err => {
+        console.log(rangeData);
+        res.json(err);
+      });
   }
   );
-  // next step; investigate models, pull up example code.
-  //figure out how to seed...
-  //make api-routes work
-
-
-
-
-
-  /*
-  router.post("/api/transaction", ({ body }, res) => {
-    Transaction.create(body)
-      .then(dbTransaction => {
-        res.json(dbTransaction);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-  });
-  
-  router.post("/api/transaction/bulk", ({ body }, res) => {
-    Transaction.insertMany(body)
-      .then(dbTransaction => {
-        res.json(dbTransaction);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-  });
-  
-  router.get("/api/transaction", (req, res) => {
-    Transaction.find({})
-      .sort({ date: -1 })
-      .then(dbTransaction => {
-        res.json(dbTransaction);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-  });
-  */
-
-  //will need a delete?
-  // ^^^
-  //app.delete("/api/workouts/:id", req, res)
-  //workouts.findByIdAndDelete(body.id)
 
 };

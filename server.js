@@ -87,3 +87,6 @@ IF YOU CAN HELP ME GET MY SEED WORKING, THEN I SHOULD BE ABLE TO MANIPULATE DATA
 ...BUT WITHOUR DATA i AM LOST
 ...I should also ask about how to do this in mongodb...
 */
+
+
+//need to fix put and /range
