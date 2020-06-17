@@ -1,7 +1,7 @@
 //dependencies
 var path = require("path");
 const workouts = require("../models/workout.js");
-const { Workout } = require("../models/index.js");
+// const { Workout } = require("../models/index.js");
 
 
 module.exports = function (app) {
@@ -17,8 +17,8 @@ module.exports = function (app) {
   }
   );
   app.post("/api/workouts", (req, res) => {
-    const work = new Workout(req.body);
-    workouts.create(work)
+    // const work = new Workout(req.body);
+    workouts.create({}) //got rid of work
       .then(workres => {
         res.json(workres);
       })
@@ -29,12 +29,29 @@ module.exports = function (app) {
   }
   );
   // this works but doesnt update totalDuration
-  app.put("/api/workouts/:id", (req, res) => {  // FIX ME
-    let myId = req.params.id;
-    let myData = req.body;
-    let totalDur;
-    //testing
+  // app.put("/api/workouts/:id", (req, res) => {  // FIX ME
+  //   let myId = req.params.id;
+  //   let myData = req.body;
+  //   let totalDur;
+  //   //testing
 
+
+  app.put("/api/workouts/:id", (req, res) => {  // FIX ME
+      let myId = req.params.id;
+      let myData = req.body;
+    //   workouts.findOneAndUpdate({_id: myId}, {$push: {exercises: myData}})
+    //   .then(workres => {
+    //     res.json(workres);
+    //      console.log("...");
+    //   })
+    //   .catch(err => {
+    //     res.json(err);
+    //   });  
+
+    // }
+    // );
+
+/*
     workouts.findOneAndUpdate({ _id: myId }, { $push: { exercises: myData } })
       .then(workres => {
         //I want to update totalDuration
@@ -65,8 +82,10 @@ module.exports = function (app) {
       .catch(err2 => {
         res.json(err2);
       });
-  }
-  );
+      */
+
+  });
+
 
   app.get("/api/workouts/range", (req, res) => {  //NEEDS TO BE FIXED
     // what range are we looking at? days? number of exercises?
@@ -82,7 +101,7 @@ module.exports = function (app) {
   }
   );
 
-//I should add a function that deletes data over a certain age so that the app is easier to maintain
+  //I should add a function that deletes data over a certain age so that the app is easier to maintain
 
 
 };
