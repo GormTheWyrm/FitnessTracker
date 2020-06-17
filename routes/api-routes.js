@@ -1,7 +1,7 @@
 //dependencies
 var path = require("path");
 const workouts = require("../models/workout.js");
-// const { Workout } = require("../models/index.js");
+const { Workout } = require("../models/index.js");
 
 
 module.exports = function (app) {
@@ -39,50 +39,14 @@ module.exports = function (app) {
   app.put("/api/workouts/:id", (req, res) => {  // FIX ME
       let myId = req.params.id;
       let myData = req.body;
-    //   workouts.findOneAndUpdate({_id: myId}, {$push: {exercises: myData}})
-    //   .then(workres => {
-    //     res.json(workres);
-    //      console.log("...");
-    //   })
-    //   .catch(err => {
-    //     res.json(err);
-    //   });  
-
-    // }
-    // );
-
-/*
-    workouts.findOneAndUpdate({ _id: myId }, { $push: { exercises: myData } })
+      workouts.findOneAndUpdate({_id: myId}, {$push: {exercises: myData}})
       .then(workres => {
-        //I want to update totalDuration
-        workouts.find({ _id: myId })
-          .then(function (myvar) {
-            console.log(myvar[0].exercises[0]);
-            totalDur = myvar[0].totalDuration;
-            let durArray = myvar[0].exercises;
-            console.log(durArray);
-            //set it to 0 , then run for loop
-            for (i = 0; i < durArray.length - 1; i++) {
-              totalDur = totalDur + durArray[i];
-            }
-            workouts.findOneAndUpdate({ _id: myId }, { totalDuration: totalDur })
-            //this would be easier as a prototype method-
-            // if I could figure out how to define a existing workout document
-            // to call the method on
-            //NOT WORKING- totalDuration is not showing up in robo 3T
-
-          })
-          .catch(err1 => {
-            res.json(err1);
-          });
-
-
-        res.json("workout updated");
+        res.json(workres);
+         console.log("...");
       })
-      .catch(err2 => {
-        res.json(err2);
-      });
-      */
+      .catch(err => {
+        res.json(err);
+      });  
 
   });
 

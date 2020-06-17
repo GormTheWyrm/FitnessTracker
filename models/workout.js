@@ -26,7 +26,7 @@ const WorkoutSchema = new Schema({
       },
       weight: {
         type: String,
-        unique: true
+        
 
       },
       distance: { //cardio
